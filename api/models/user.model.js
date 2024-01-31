@@ -1,4 +1,5 @@
-import mongoose, { mongo } from 'mongoose'
+import mongoose from 'mongoose'
+import uniqueValidator from 'mongoose-unique-validator'
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema(
   },
   { timeseries: true }
 )
-
+userSchema.plugin(uniqueValidator)
 const User = mongoose.model('User', userSchema)
+
 export default User
