@@ -17,6 +17,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      default:
+        'https://imgv3.fotor.com/images/gallery/Realistic-Male-Profile-Picture.jpg',
+    },
   },
   { timeseries: true }
 )
