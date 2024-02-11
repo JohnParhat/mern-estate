@@ -29,6 +29,7 @@ const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const [showListingsError, setShowListingsError] = useState(false)
   const [userListings, setUserListing] = useState([])
+  const [deleteListingError, setDeleteListingError] = useState(false)
   const dispatch = useDispatch()
   const handleFileUpload = (file) => {
     const storage = getStorage()
@@ -131,17 +132,19 @@ const Profile = () => {
   }
   const handleListingDelete = async (id) => {
     try {
+      setDeleteListingError(false)
       const res = await fetch(`/api/listing/delete/${id}`, {
         method: 'DELETE',
       })
       const data = await res.json()
       if (data.success === false) {
-        console.log(data.message)
+        setDeleteListingError(data.message)
         return
       }
       setUserListing((prev) => prev.filter((listing) => listing._id !== id))
     } catch (error) {
       console.log(error.message)
+      setDeleteListingError(error.message)
     }
   }
   return (
@@ -266,6 +269,9 @@ const Profile = () => {
               </div>
             </div>
           ))}
+          {deleteListingError && (
+            <span className='text-red-700 text-sm'>{deleteListingError}</span>
+          )}
         </div>
       )}
     </div>
